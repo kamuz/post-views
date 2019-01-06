@@ -18,3 +18,15 @@ function kmz_post_create_field(){
     $query = "ALTER TABLE $wpdb->posts ADD post_views INT NOT NULL DEFAULT '0'";
     $wpdb->query($query);
 }
+
+add_filter('the_content', 'kmz_post_views');
+
+function kmz_post_views($content){
+    if(is_page()) return $content;
+    $views = 0;
+    global $post;
+    echo "<pre>";
+    var_dump($post);
+    echo "</pre>";
+    return $content . "<p>Views: " . $views . "</p>";
+}
